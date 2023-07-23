@@ -1,4 +1,0 @@
-1 Questão
-(i) Para R2, embora para k=3 R2 já seja alto, ele não aproxima na origem. Grau 4 aproxima melhor.
-(ii) Para R2, embora para k=3 R2 já seja alto, ele não aproxima na origem. Grau 4 aproxima melhor e confirma o R2
-(iii) Entre K=3 e k=4, o menor AIC é quando o graud o polinômio é 4. Acima disso, o AIC começa a  ajustar execessivamente na origem. 
