@@ -2,7 +2,7 @@ load aerogerador.dat
 v=aerogerador(:,1);
 P=aerogerador(:,2);
 
-k=1;
+k=4;
 
 figure; plot(v, P, 'bo');
 title(sprintf("K=%d", k));
@@ -10,7 +10,7 @@ xlabel('Velocidade do vento [m/s]');
 ylabel('Potencia gerada [kwatts]');
 
 disp("Waiting...");
-pause(2);
+pause(10);
 
 
 
