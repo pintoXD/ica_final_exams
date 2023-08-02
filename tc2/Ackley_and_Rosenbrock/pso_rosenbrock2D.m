@@ -1,0 +1,94 @@
+% Implementacao do algoritmo PSO (Particle Swarm Optimization)
+% para encontrar o minimo da funcao de Rosenbrock de 2 variaveis
+%
+%  f(x,y) = (1-x)^2+100(y-x^2)^2; 
+%
+% Autor: Guilherme A. Barreto
+% Data: 03/12/2017
+
+clear; clc; close all;
+
+%%% Gráfico da função de Rosenbrock
+limites=[-5 5];   % Limites do intervalo de busca para funcao de interesse
+xg=limites(1):0.01:limites(2);  % Dominio de x discretizado em incrementos de 0.1
+yg=limites(1):0.01:limites(2);  % Dominio de y discretizado em incrementos de 0.1
+[Xg,Yg]=meshgrid(xg,yg);
+Fg=rosenbrock2D(Xg,Yg);
+figure; mesh(Xg,Yg,Fg);
+
+%%% Parametros do PSO
+Ng=100;       % Numero de iteracoes
+Np=20;       % numero de particulas
+c1=2.05;     % Constante de aceleracao 1
+c2=c1;	     % Constante de aceleracao 2
+w=0.6;       % Constante de inercia
+
+v=zeros(Np,2);   % Velocidades iniciais das particulas
+x=unifrnd(limites(1),limites(2),Np,2); 	% Posicoes iniciais das particulas
+Fcand=rosenbrock2D(x(:,1),x(:,2));  % Avalia solucoes iniciais
+
+x_best=x;    % Faz posicoes iniciais = melhores posicoes
+Fbest=Fcand;  % Faz aptidoes iniciais = melhores aptidoes
+
+% Encontra melhor solucao no enxame
+[Fmin I]=min(Fbest);
+g_best=x_best(I,:);  % Melhor posição corrente no enxame
+
+%%% Roda PSO por Ng iteracoes
+for t=1:Ng,
+    iteracao=t;
+    
+    %%% Plota melhores solucoes correntes sobre curvas de contorno da funcao Rosenbrock
+    if ~mod(iteracao,10),
+       figure;
+       contour(xg',yg',Fg',30); hold on
+       plot(x_best(:,1),x_best(:,2),'r*'); 
+       xlabel('variavel X'); 
+       ylabel('variavel Y');
+       hold off
+       pause
+    end 
+
+    %% Atualiza velocidades das particulas
+    Vcog = rand(Np,1).*(x_best - x); %%componente cognitiva
+    Vsoc = rand(Np,1).*(g_best - x); %%componente social
+
+    v = w*v + c1*Vcog + c2*Vsoc;  % atualiza velocidades
+    x = x + v; 	% atualiza posicoes (i.e. gera novas solucoes candidatas)
+
+    % Verifica se existem solucoes candidatas fora dos limites
+    I1=find(x(:,1) < limites(1)); x(I1,1)=limites(1);
+    I2=find(x(:,1) > limites(2)); x(I2,1)=limites(2);
+
+    I1=find(x(:,2) < limites(1)); x(I1,2)=limites(1);
+    I2=find(x(:,2) > limites(2)); x(I2,2)=limites(2);
+
+    Fcand=rosenbrock2D(x(:,1),x(:,2));  % Avalia solucoes candidatas
+    
+    %% Avalia solucoes candidatas (problema minimizacao)
+    DF=Fcand-Fbest;
+    I_better=find(DF<=0);  % Particulas que melhoraram posicoes
+    I_worse =find(DF>0);  % Particluas que pioraram posicoes
+
+    % Atualiza posicoes das particulas que melhoraram performance
+    x_best(I_better,:)=x(I_better,:);
+    Fbest(I_better)=Fcand(I_better);
+
+    % Mantem posicoes das particulas que pioraram performance
+    x_best(I_worse,:)=x_best(I_worse,:);
+    Fbest(I_worse)=Fbest(I_worse);
+
+    % Encontra melhor solucao corrente no enxame
+    [F_gbest I]=min(Fbest);
+
+    g_best=x_best(I,:);  % Melhor posição corrente no enxame
+
+    aptidao(t)=F_gbest;
+end
+
+g_best, F_gbest
+
+figure; plot(aptidao,'linewidth',3);
+xlabel('Iteration');
+ylabel('Fitness');
+
