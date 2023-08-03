@@ -13,16 +13,16 @@ v_aero=aerogerador(:,1);
 P=aerogerador(:,2);
 
 %%% Gráfico da função de Ackley
-limites=[-10 10];   % Limites do intervalo de busca para funcao de Ackely
+limites=[-6 10];   % Limites do intervalo de busca para funcao de Ackely
 %x_ackley=limites(1):0.1:limites(2);  % Dominio de x discretizado em incrementos de 0.1
-k = 4;
+k = 5;
 
 
 %f_ackley=ackley1D(x_ackley);
 
 %%% Parametros do PSO
-Ng=50;       % Numero de iteracoes
-Np=20;       % numero de particulas
+Ng=200;       % Numero de iteracoes
+Np=80;       % numero de particulas
 c1=2.05;     % Constante de aceleracao 1
 c2=c1;	     % Constante de aceleracao 2
 w=0.6;       % Constante de inercia
@@ -93,19 +93,21 @@ for t=1:Ng,
     % Encontra melhor solucao corrente no enxame
     [F_gbest I]=min(Fbest);
 
-    g_best=b_best(I);  % Melhor posição corrente no enxame
+    g_best=b_best(I, :);  % Melhor posição corrente no enxame
 
     aptidao(t)=F_gbest;
 
 end
 
-[b_best Fbest]
+%[b_best Fbest]
+%b_best
+%Fbest
 g_best, F_gbest
 
 %%% Plota melhor solucao apos Ng iteracoes sobre a curva da funcao de ackley
 %plot(x_ackley,f_ackley,'k-','linewidth',3,x_best,Fbest,'ro','markersize',10,'linewidth',2);
 %plot(x_best,Fbest,'ro','linewidth',3,'markersize',10);
-plot(v_aero, polyval(b_best, v_aero));
+plot(v_aero, polyval(g_best, v_aero));
 hold off
 
 figure; plot(aptidao,'linewidth',3);

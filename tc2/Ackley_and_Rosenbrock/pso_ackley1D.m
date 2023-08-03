@@ -32,7 +32,7 @@ size(Fbest)
 [Fmin I]=min(Fbest)
 g_best=x_best(I)  % Melhor posição corrente no enxame
 
-pause(30);
+pause(1);
 %%% Roda algoritmo por Ng iteracoes
 for t=1:Ng,
 
