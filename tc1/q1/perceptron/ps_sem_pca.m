@@ -28,27 +28,18 @@ X_labels = reshape(X_labels, N_xlabels(1),N_xlabels(2)*N_xlabels(3)); %Transform
 
 X=X'; D=D'; X_labels=X_labels'; D_labels=D_labels';
 
-D=double(D);
-D_labels=double(D_labels);
 
-X=double(X/255.00); %Normaliza os valores dos pixels entre 0 e 1
-X_labels=double(X_labels/255.00); %Normaliza os valores dos pixels entre 0 e 1
+D=double(1./(1 + exp(-D))); %Normaliza os valores dos resultados com uma função sigmoid entre -1 e 1;
+D_labels=double(1./(1 + exp(-D_labels))); %Normaliza os valores dos resultados com uma função sigmoid entre -1 e 1;
 
-N = size(X); %N(1) = Numero de pixels
+X=double(X);
+X_labels=double(X_labels);
+n = size(X); %N(1) = Numero de pixels
              %N(2) = Numero de imagens
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 2: Separar dados de treino/teste %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%N=N(2);   % Numero de exemplos = No. de colunas da matriz X
-%Ntr=floor(0.8*N);  % Numero de casos para treinamento
-Nts=N(2);  % Numero de casos de teste
-
-%I=randperm(N);
-
-%X=[-ones(1,N);X];  % Adiciona uma linha de -1's
-%X=X(:,I);  % Embaralha as colunas da matriz X
-
-%D=D(I);    % Embaralha as colunas da matriz D para manter correspondencia
 
 % Dados de treinamento (Xtr, Dtr)
 Xtr=X;  Dtr=D;
@@ -60,17 +51,40 @@ Xts=X_labels;  Dts=D_labels;
 %%% Passo 3: Estimar os parametros do classificador (pesos e limiares) %%
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+p=n(1);  % dimensao do vetor de entrada
+Ne=300;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+alfa=0.01; % Taxa de aprendizagem
 
-%W=Dtr*Xtr'*inv(Xtr*Xtr');    % Equacao de livro-texto (teorica)
-%W=D*X'*inv(X*X');             % Equacao de livro-texto (teorica)
-W=Dtr/Xtr;                  % Solucao que usa decomposicao QR
-%W=Dtr*pinv(Xtr);              % Solucao que usa decomposicao SVD
+W=rand(p,1);  % Inicializacao do vetor de pesos
+Ntr = n(2);
+
+for t=1:Ne,
+    Itr=randperm(Ntr);
+    Xtr=Xtr(:,Itr);  % Embaralha dados a cada epoca de treinamento
+    Dtr=Dtr(Itr);
+
+    acc_erro_quad=0;  % Acumula erro quadratico por vetor em uma epoca
+    for k=1:Ntr,
+        aux_sigmoid = W'*Xtr(:,k);
+        sigmoid = 1./(1 + exp(-aux_sigmoid));
+        ypred(k)=sigmoid;  % Saida predita para k-esimo vetor de entrada
+        erro(k)=Dtr(k)-ypred(k);  % erro de predicao
+        W=W+alfa*erro(k)*Xtr(:,k); % Atualizacao do vetor de pesos
+        acc_erro_quad=acc_erro_quad+ 0.5*erro(k)*erro(k);
+    end
+    erro_medio_epoca(t)=acc_erro_quad/Ntr;
+end
+
+figure; plot(erro_medio_epoca);
+title('Curva de Aprendizagem');
+xlabel('Epoca de treinamento');
+ylabel('Erro quadratico medio por epoca');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 4: Determinar predicoes da classe dos vetores de teste %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Ypred=W*Xts;          % Saida como numeros reais
-Ypred_q=round(Ypred);  % Saida quantizada para +1 ou -1.
+Ypred=W'*Xts;          % Saida como numeros reais
+Ypred_q=sign(Ypred);  % Saida quantizada para +1 ou -1.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 5: Determinar as taxas de acerto/erro %%%%%%%%
