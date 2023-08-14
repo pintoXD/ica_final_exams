@@ -52,17 +52,18 @@ Xts=X_labels;  Dts=D_labels;
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(1);  % dimensao do vetor de entrada
-Ne=300;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+Ne=10;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
 alfa=0.01; % Taxa de aprendizagem
 
 W=rand(p,1);  % Inicializacao do vetor de pesos
 Ntr = n(2);
+Nts = size(Xts)(2);
 
 for t=1:Ne,
     Itr=randperm(Ntr);
     Xtr=Xtr(:,Itr);  % Embaralha dados a cada epoca de treinamento
     Dtr=Dtr(Itr);
-
+    Epoca=t
     acc_erro_quad=0;  % Acumula erro quadratico por vetor em uma epoca
     for k=1:Ntr,
         aux_sigmoid = W'*Xtr(:,k);
@@ -70,7 +71,7 @@ for t=1:Ne,
         ypred(k)=sigmoid;  % Saida predita para k-esimo vetor de entrada
         erro(k)=Dtr(k)-ypred(k);  % erro de predicao
         W=W+alfa*erro(k)*Xtr(:,k); % Atualizacao do vetor de pesos
-        acc_erro_quad=acc_erro_quad+ 0.5*erro(k)*erro(k);
+        acc_erro_quad=acc_erro_quad+0.5*erro(k)*erro(k);
     end
     erro_medio_epoca(t)=acc_erro_quad/Ntr;
 end
@@ -83,8 +84,8 @@ ylabel('Erro quadratico medio por epoca');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 4: Determinar predicoes da classe dos vetores de teste %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Ypred=W'*Xts;          % Saida como numeros reais
-Ypred_q=sign(Ypred);  % Saida quantizada para +1 ou -1.
+Ypred=W'*Xts;        % Saida como numeros reais
+Ypred_q=1./(1 + exp(-Ypred));  % Saida quantizada para +1 ou -1 usando uma sigmoide.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 5: Determinar as taxas de acerto/erro %%%%%%%%

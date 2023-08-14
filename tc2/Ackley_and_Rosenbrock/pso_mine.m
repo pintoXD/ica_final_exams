@@ -36,7 +36,7 @@ v=zeros(Np,1);   % Velocidades iniciais das particulas
 %ao valor independente do polinômio. Por exemplo, se P = ax + b. o +1 representa
 %os valores que b pode assumir.
 b_aerogerador=unifrnd(limites(1), limites(2), Np, k+1);
-SEQ  = pso_seq(b_aerogerador, v_aero, P);
+SEQ  = pso_sea(b_aerogerador, v_aero, P);
 
 Fcand = SEQ;
 
@@ -75,7 +75,7 @@ for t=1:Ng,
     I=find(b_aerogerador > limites(2)); b_aerogerador(I)=limites(2);   % fora do limite superior
 
     %Fcand=ackley1D(x);  % Avalia solucoes candidatas
-    SEQ = pso_seq(b_aerogerador, v_aero, P);
+    SEQ = pso_sea(b_aerogerador, v_aero, P);
     Fcand = SEQ;
     %% Avalia solucoes candidatas (problema minimizacao)
     DF=Fcand-Fbest;
