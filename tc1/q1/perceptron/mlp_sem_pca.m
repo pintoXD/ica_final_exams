@@ -77,8 +77,8 @@ eta=0.05;   % Passo de aprendizagem
 mom=0.75;  % Fator de momento
 
 % Define tamanho dos conjuntos de treinamento/teste (hold out)
-ptrn=0.8;    % Porcentagem usada para treino
-ptst=1-ptrn; % Porcentagem usada para teste
+# ptrn=0.8;    % Porcentagem usada para treino
+# ptst=1-ptrn; % Porcentagem usada para teste
 
 for r=1:Nr,
 
@@ -102,7 +102,7 @@ for r=1:Nr,
     WW=0.1*rand(num_pixels_imagem, Nh);   % Pesos entrada -> camada oculta
     WW_old=WW;              % Necessario para termo de momento
 
-    MM=0.01*rand(Nh,num_classes);   % Pesos camada oculta -> camada de saida
+    MM=0.1*rand(Nh,num_classes);   % Pesos camada oculta -> camada de saida
     MM_old = MM;            % Necessario para termo de momento
 
     %%% ETAPA DE TREINAMENTO
