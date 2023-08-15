@@ -75,12 +75,12 @@ Xts=D;  Dts=D_labels;
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(2);  % dimensao do vetor de entrada
-Ne=1000;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
-alfa=0.001; % Taxa de aprendizagem
+Ne=10;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+alfa=0.05; % Taxa de aprendizagem
 
 num_classes = 10;
 W=rand(p,num_classes);  % Inicializacao do vetor de pesos
-Ntr = n(2);
+Ntr = n(1);
 %Ntr = 10;
 Nts = size(Xts)(1);
 
@@ -101,7 +101,7 @@ for t=1:Ne,
         %ypred(k)=(W'*Xtr(:,k));  % Saida predita para k-esimo vetor de entrada
         activations(k, :) = Xtr(k,:) * W;  % Saida predita para k-esimo vetor de entrada
         normalized_activations(k, :) = sigmoid(activations(k, :));
-        #[maior_probabilidade label_maior_probabilidade] = max(normalized_activations(k, :));
+
         erro(k, :) =  mapped_labels(Dtr(k) + 1, :) - normalized_activations(k,:);  % erro de predicao
         %erro(k)=Dtr(k)-ypred(k);  % erro de predicao
         W=W+alfa*Xtr(k,:)'*erro(k,:); % Atualizacao do vetor de pesos
