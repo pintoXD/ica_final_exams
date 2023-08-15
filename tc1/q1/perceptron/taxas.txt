@@ -1,0 +1,8 @@
+Epoca = 1000
+elapsed_time = 5910.6
+Nerros_pos = 550
+Nerros_neg = 410
+Nacertos = 9041
+Perros_pos = 5.4995
+Perros_neg = 4.0996
+Pacertos = 90.401

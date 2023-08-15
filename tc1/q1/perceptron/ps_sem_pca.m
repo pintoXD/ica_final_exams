@@ -75,8 +75,8 @@ Xts=D;  Dts=D_labels;
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(2);  % dimensao do vetor de entrada
-Ne=10;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
-alfa=0.05; % Taxa de aprendizagem
+Ne=1000;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+alfa=0.01; % Taxa de aprendizagem
 
 num_classes = 10;
 W=rand(p,num_classes);  % Inicializacao do vetor de pesos
@@ -105,7 +105,7 @@ for t=1:Ne,
         erro(k, :) =  mapped_labels(Dtr(k) + 1, :) - normalized_activations(k,:);  % erro de predicao
         %erro(k)=Dtr(k)-ypred(k);  % erro de predicao
         W=W+alfa*Xtr(k,:)'*erro(k,:); % Atualizacao do vetor de pesos
-        acc_erro_quad=acc_erro_quad+0.5*erro(k)*erro(k);
+        acc_erro_quad=acc_erro_quad+0.5*sum(erro(k,:))*sum(erro(k,:));
     end
     erro_medio_epoca(t)=acc_erro_quad/Ntr;
 end
