@@ -70,7 +70,7 @@ num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
 numero_maquinas = 5; %Numero de maquinas do comite
 
-Ne = 2; % No. de epocas de treinamento
+Ne = 1; % No. de epocas de treinamento
 Nr = 1;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
@@ -83,44 +83,37 @@ vetor_WW = zeros(1, num_pixels_imagem, Nh);
 % Define tamanho dos conjuntos de treinamento/teste (hold out)
 # ptrn=0.8;    % Porcentagem usada para treino
 # ptst=1-ptrn; % Porcentagem usada para teste
+my_tic = tic ();
+EQMtested = zeros(numero_maquinas, 1);
+
 for m=1:numero_maquinas,
     num_imagens_treino_maquina = floor(num_imagens_treino/numero_maquinas);
     limite_inferior = ((m-1)*num_imagens_treino_maquina) + 1;
     limite_superior = (m)*num_imagens_treino_maquina;
     dados_treino_maquina = dados_treino(limite_inferior:limite_superior, :);
     alvos_treino_maquina = alvos_treino(limite_inferior:limite_superior, :);
+    % num_imagens_treino_maquina = num_imagens_treino;
+    limite_inferior = ((m-1)*num_imagens_treino_maquina) + 1;
+    limite_superior = (m)*num_imagens_treino_maquina;
+    % dados_treino_maquina = dados_treino;
+    % alvos_treino_maquina = alvos_treino;
 
 
     for r=1:Nr,
 
         Repeticao=r,
 
-        # I=randperm(ColD);
-        # Dn=Dn(:,I);
-        # alvos=alvos(:,I);   % Embaralha saidas desejadas tambem p/ manter correspondencia com vetor de entrada
-
-        # J=floor(ptrn*ColD);
-
-        % Vetores para treinamento e saidas desejadas correspondentes
-        # P = Dn(:,1:J); T1 = alvos(:,1:J);
-        # [lP Ntrain]=size(P);   % Tamanho da matriz de vetores de treinamento
-
-        # % Vetores para teste e saidas desejadas correspondentes
-        # Q = Dn(:,J+1:end); T2 = alvos(:,J+1:end);
-        # [lQ Ntest]=size(Q);   % Tamanho da matriz de vetores de teste
-
         % Inicia matrizes de pesos
         WW=0.1*rand(num_pixels_imagem, Nh);   % Pesos entrada -> camada oculta
         WW_old=WW;              % Necessario para termo de momento
-        vetor_WW(m, :, :) = WW;
-
+        
         MM=0.1*rand(Nh,num_classes);   % Pesos camada oculta -> camada de saida
         MM_old = MM;            % Necessario para termo de momento
-        vetor_MM(m, :, :) = MM;
+        
         %%% ETAPA DE TREINAMENTO
         for t=1:Ne,   % Inicio do loop de epocas
 
-            # I=randperm(Ntrain); P=P(:,I); T1=T1(:,I);   % Embaralha vetores de treinamento e saidas desejadas
+            % I=randperm(Ntrain); P=P(:,I); T1=T1(:,I);   % Embaralha vetores de treinamento e saidas desejadas
 
             EQ=0;
             for tt=1:num_imagens_treino_maquina,   % Inicia LOOP de epocas de treinamento
@@ -158,49 +151,15 @@ for m=1:numero_maquinas,
                 WW = WW + eta*X'*DDi + mom*(WW - WW_old);
                 WW_old=WW_aux;
             end   % Fim de uma epoca
-
+            vetor_WW(m, :, :) = WW;
+            vetor_MM(m, :, :) = MM;
             % MEDIA DO ERRO QUADRATICO P/ EPOCA
             EQMepoca(t)=EQ/num_imagens_treino_maquina;
         end   % Fim do loop de treinamento
 
         EQMtrain{r}=EQMepoca;   % Salva curva de aprendizagem para a r-esima repeticao
-
-        # %% ETAPA DE GENERALIZACAO  %%%
-        # OUT=[];
-        # EQMtested=0;
-        # for tt=1:num_imagens_teste,
-        #     % CAMADA OCULTA
-        #     X=dados_teste(tt, :); % Constroi vetor de entrada com adicao da entrada x0=1
-        #     Ui = X*WW;           % Ativacao (net) dos neuronios da camada oculta
-        #     Yi = 1./(1+exp(-Ui)); % Saida entre [0,1] (funcao logistica)
-
-        #     % CAMADA DE SAIDA
-        #     Y=Yi;           % Constroi vetor de entrada DESTA CAMADA com adicao da entrada y0=-1
-        #     Uk = Y*MM;          % Ativacao (net) dos neuronios da camada de saida
-        #     Ok = 1./(1+exp(-Uk)); % Saida entre [0,1] (funcao logistica)
-        #     OUT=[OUT; Ok];    % Armazena saidas da rede
-
-        #     classe_mapeada = mapa_de_classes(alvos_teste(tt) + 1, :); %Especie de one-hot enconding
-        #     Ek = classe_mapeada - Ok;           % erro entre a saida desejada e a saida da rede
-
-        #     % ERRO QUADRATICO GLOBAL (todos os neuronios) POR VETOR DE ENTRADA
-        #     EQMtested = EQMtested + 0.5*sum(Ek.^2);
-        # end
-
-        # EQMtest(r)=EQMtested/num_imagens_teste;
-
-        # % CALCULA TAXA DE ACERTO
-        # count_OK=0;  % Contador de acertos
-        # for t=1:num_imagens_teste,
-        #     [probabilidade algarismo_identificado] = max(OUT(t, :));
-            
-        #     if alvos_teste(t,:)==(algarismo_identificado - 1),   % Conta acerto se os dois indices coincidem
-        #         count_OK=count_OK+1;
-        #     end
-        # end
-
-        # Tx_OK(r)=100*(count_OK/num_imagens_teste); % Taxa de acerto global
     end
+
 end
 
 
@@ -235,6 +194,7 @@ for m=1:numero_maquinas,
         comite_soma_out_total = comite_soma_out_total + reshape(comite_OUT(m, : , : ), num_imagens_teste, num_classes);
 end
 
+
 %Faz uma média de todas as saídas e salva as repostas em uma nova variavel
 comite_out_oficial = comite_soma_out_total/numero_maquinas;
 
@@ -251,7 +211,7 @@ end
 
 Tx_OK=100*(count_OK/num_imagens_teste); % Taxa de acerto global
 
-
+Elapsed_time = toc ()
 
 
 
@@ -263,25 +223,25 @@ Tx_OK_mediana=median(Tx_OK);  % Exibe mediana da taxa de acerto dentre as Nr rod
 
 STATS=[Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana]
 
-# % Graficos
-# figure;
-# plot(1:Ne,EQMtrain{r_max},'linewidth',2); xlabel('Epocas');
-# ylabel('Erro Medio Quadratico');
-# title('Curva de Aprendizagem para Melhor Caso')
-# grid, set(gca,"fontsize", 12)
+% % Graficos
+% figure;
+% plot(1:Ne,EQMtrain{r_max},'linewidth',2); xlabel('Epocas');
+% ylabel('Erro Medio Quadratico');
+% title('Curva de Aprendizagem para Melhor Caso')
+% grid, set(gca,"fontsize", 12)
 
-# figure;
-# plot(1:Ne,EQMtrain{r_min},'linewidth',2); xlabel('Epocas');
-# ylabel('Erro Medio Quadratico');
-# title('Curva de Aprendizagem para Pior Caso')
-# grid, set(gca,"fontsize", 12)
+% figure;
+% plot(1:Ne,EQMtrain{r_min},'linewidth',2); xlabel('Epocas');
+% ylabel('Erro Medio Quadratico');
+% title('Curva de Aprendizagem para Pior Caso')
+% grid, set(gca,"fontsize", 12)
 
-# figure; boxplot(Tx_OK,'linewidth',2);
-# title('Boxplot da taxa de acerto para Nr rodadas')
-# set(gca,"fontsize", 12)
+% figure; boxplot(Tx_OK,'linewidth',2);
+% title('Boxplot da taxa de acerto para Nr rodadas')
+% set(gca,"fontsize", 12)
 
-# figure; histfit(Tx_OK);
-# set(gca, "fontsize", 12)
-# title('Histograma da taxa de acerto para Nr rodadas')
+% figure; histfit(Tx_OK);
+% set(gca, "fontsize", 12)
+% title('Histograma da taxa de acerto para Nr rodadas')
 
 

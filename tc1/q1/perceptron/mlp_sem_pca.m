@@ -68,7 +68,7 @@ num_pixels_imagem = N_dados_treino(2);
 num_imagens_teste = N_dados_teste(1);
 num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
-Ne = 10; % No. de epocas de treinamento
+Ne = 1; % No. de epocas de treinamento
 Nr = 1;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
@@ -79,24 +79,10 @@ mom=0.75;  % Fator de momento
 % Define tamanho dos conjuntos de treinamento/teste (hold out)
 # ptrn=0.8;    % Porcentagem usada para treino
 # ptst=1-ptrn; % Porcentagem usada para teste
-
+tic ();
 for r=1:Nr,
 
     Repeticao=r,
-
-    # I=randperm(ColD);
-    # Dn=Dn(:,I);
-    # alvos=alvos(:,I);   % Embaralha saidas desejadas tambem p/ manter correspondencia com vetor de entrada
-
-    # J=floor(ptrn*ColD);
-
-    % Vetores para treinamento e saidas desejadas correspondentes
-    # P = Dn(:,1:J); T1 = alvos(:,1:J);
-    # [lP Ntrain]=size(P);   % Tamanho da matriz de vetores de treinamento
-
-    # % Vetores para teste e saidas desejadas correspondentes
-    # Q = Dn(:,J+1:end); T2 = alvos(:,J+1:end);
-    # [lQ Ntest]=size(Q);   % Tamanho da matriz de vetores de teste
 
     % Inicia matrizes de pesos
     WW=0.1*rand(num_pixels_imagem, Nh);   % Pesos entrada -> camada oculta
@@ -181,7 +167,7 @@ for r=1:Nr,
     count_OK=0;  % Contador de acertos
     for t=1:num_imagens_teste,
         [probabilidade algarismo_identificado] = max(OUT(t, :));
-        
+
         if alvos_teste(t,:)==(algarismo_identificado - 1),   % Conta acerto se os dois indices coincidem
             count_OK=count_OK+1;
         end
@@ -189,6 +175,8 @@ for r=1:Nr,
 
     Tx_OK(r)=100*(count_OK/num_imagens_teste); % Taxa de acerto global
 end
+
+elapsed_time = toc()
 
 [Tx_OK_max r_max]=max(Tx_OK); % Encontra rodada que gerou maior Tx_OK e armazena em r_max
 [Tx_OK_min r_min]=min(Tx_OK); % Encontra rodada que gerou menor Tx_OK e armazena em r_min
