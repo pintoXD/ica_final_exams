@@ -6,6 +6,8 @@
 
 clear; clc; close all;
 pkg load nan
+pkg load statistics
+pkg load statistics-bootstrap
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 1: Carregar banco de dados %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,56 +81,70 @@ Xtr=execute_pca(Xtr); Xts=execute_pca(Xts);
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(2);  % dimensao do vetor de entrada
-Ne=1000;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+numero_de_epocas=500;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
 alfa=0.01; % Taxa de aprendizagem
 
 num_classes = 10;
 W=rand(p,num_classes);  % Inicializacao do vetor de pesos
+pesos_totais_maquinas = 0;
 Ntr = n(1);
 %Ntr = 10;
 Nts = size(Xts)(1);
+num_maquinas = 5;
 
 sigmoid = @(valor)1./(1 + exp(-valor));
 mapped_labels = eye(num_classes);
-
 tic();
-for t=1:Ne,
-    %Itr=randperm(Ntr);
-    %Xtr=Xtr(:,Itr);  % Embaralha dados a cada epoca de treinamento
-    %Dtr=Dtr(Itr);
-    Epoca=t
-    acc_erro_quad=0;  % Acumula erro quadratico por vetor em uma epoca
-    for k=1:Ntr,
-        %aux_sigmoid = W'*Xtr(:,k);
-        %sigmoid = 1./(1 + exp(-aux_sigmoid));
-        %ypred(k)=sigmoid;  % Saida predita para k-esimo vetor de entrada
-        %ypred(k)=(W'*Xtr(:,k));  % Saida predita para k-esimo vetor de entrada
-        activations(k, :) = Xtr(k,:) * W;  % Saida predita para k-esimo vetor de entrada
-        normalized_activations(k, :) = sigmoid(activations(k, :));
 
-        erro(k, :) =  mapped_labels(Dtr(k) + 1, :) - normalized_activations(k,:);  % erro de predicao
-        %erro(k)=Dtr(k)-ypred(k);  % erro de predicao
-        W=W+alfa*Xtr(k,:)'*erro(k,:); % Atualizacao do vetor de pesos
-        acc_erro_quad=acc_erro_quad+0.5*sum(erro(k,:))*sum(erro(k,:));
+for m=1:num_maquinas,
+
+    bootrstrapped_index = boot(1:1:Ntr, 1);
+    Xtr_maquina_atual = Xtr(bootrstrapped_index,:);
+    Dtr_maquina_atual = Dtr(bootrstrapped_index,:);
+    maquina=m
+    
+    for t=1:numero_de_epocas,
+
+        Epoca=t
+        acc_erro_quad=0;  % Acumula erro quadratico por vetor em uma epoca
+        for k=1:Ntr,
+
+            activations = Xtr_maquina_atual(k,:) * W;  % Saida predita para k-esimo vetor de entrada
+            normalized_activations = sigmoid(activations);
+
+            erro =  mapped_labels(Dtr(k) + 1, :) - normalized_activations;  % erro de predicao
+            
+            W=W+alfa*Xtr_maquina_atual(k,:)'*erro; % Atualizacao do vetor de pesos
+            acc_erro_quad=acc_erro_quad+0.5*sum(erro)*sum(erro);
+        end
+        erro_medio_epoca(t)=acc_erro_quad/Ntr;
     end
-    erro_medio_epoca(t)=acc_erro_quad/Ntr;
+    pesos_totais_maquinas = pesos_totais_maquinas + W;
 end
+
+
+
 elapsed_time = toc ()
-figure; plot(erro_medio_epoca);
-title('Curva de Aprendizagem');
-xlabel('Epoca de treinamento');
-ylabel('Erro quadratico medio por epoca');
+
+
+
+% figure; plot(erro_medio_epoca);
+% title('Curva de Aprendizagem');
+% xlabel('Epoca de treinamento');
+% ylabel('Erro quadratico medio por epoca');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 4: Determinar predicoes da classe dos vetores de teste %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Ypred=round(Xts*W);        % Saida como numeros reais
+
+W_gerado_comite = pesos_totais_maquinas/num_maquinas;
+Ypred=round(Xts*W_gerado_comite);        % Saida como numeros reais
 num_test_data = size(Ypred)(1);
 
 %Mapeando os maiores valores de cada linha pra label correspondente
 for i=1:num_test_data,
-   [valor posicao] = max(Ypred(i, :));
-   Ypred_q(i) = posicao - 1;
+   [probabilidade algarismo_identificado] = max(Ypred(i, :));
+   Ypred_q(i) = algarismo_identificado - 1;
 end
 
 
@@ -150,8 +166,8 @@ Perros_neg=100*Nerros_neg/Nts
 Pacertos=100*Nacertos/Nts
 
 
+save -text ps_comite_com_pca.txt numero_de_epocas num_maquinas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
 
-save -text ps_sem_pca.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos;
 
 
 

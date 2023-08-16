@@ -56,8 +56,11 @@ alvos_treino=[ones(1,1); alvos_treino];
 alvos_teste=[ones(1,1); alvos_teste];
 
 %Aplica PCA nesses dados;
-dados_treino = execute_pca(dados_treino);
-dados_teste = execute_pca(dados_teste);
+pca_dados_treino = execute_pca(dados_treino');
+pca_dados_teste = execute_pca(dados_teste');
+dados_treino = pca_dados_treino';
+dados_teste = pca_dados_teste';
+
 
 N_dados_treino=size(dados_treino);  % N(1)=Numero de imagens, N(2)=Número de pixels da i-ésima imagem
 N_dados_teste=size(dados_teste);  % N(1)=Numero de imagens, N(2)=Número de pixels da i-ésima imagem
@@ -72,8 +75,8 @@ num_pixels_imagem = N_dados_treino(2);
 num_imagens_teste = N_dados_teste(1);
 num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
-Ne = 1; % No. de epocas de treinamento
-Nr = 1;   % No. de rodadas de treinamento/teste
+Ne = 50; % No. de epocas de treinamento
+Nr = 2;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
 
@@ -188,7 +191,7 @@ Tx_OK_media=mean(Tx_OK); % Exibe media da taxa de acerto para as Nr rodadas
 Tx_OK_desvio=std(Tx_OK); % Exibe desvio-padrao da taxa de acerto para as Nr rodadas
 Tx_OK_mediana=median(Tx_OK);  % Exibe mediana da taxa de acerto dentre as Nr rodadas
 
-save -append mlp_com_pca_out.txt Ne Nr Nh No Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana;
+save -append mlp_com_pca_out.txt Ne Nr Nh No Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana elapsed_time;
 
 STATS=[Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana]
 

@@ -74,8 +74,8 @@ num_imagens_teste = N_dados_teste(1);
 num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
 
-numero_maquinas = 5; %Numero de maquinas do comite
-Ne = 1; % No. de epocas de treinamento
+numero_maquinas = 25; %Numero de maquinas do comite
+Ne = 50; % No. de epocas de treinamento
 Nr = 2;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
@@ -256,7 +256,7 @@ end
 
 Tx_OK=100*(count_OK/num_imagens_teste); % Taxa de acerto global
 
-Elapsed_time = toc ()
+elapsed_time = toc ()
 
 
 
@@ -270,7 +270,7 @@ Tx_OK_mediana=median(Tx_OK);  % Exibe mediana da taxa de acerto dentre as Nr rod
 
 STATS=[Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana]
 
-save -append mlp_comite_out.txt Ne Nr Nh No numero_maquinas Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana;
+save -append mlp_comite_out_com_pca.txt Ne Nr Nh No numero_maquinas Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana elapsed_time;
 
 % Graficos
 figure;

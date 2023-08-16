@@ -75,7 +75,7 @@ Xts=D;  Dts=D_labels;
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(2);  % dimensao do vetor de entrada
-Ne=1000;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+numero_de_epocas=500;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
 alfa=0.01; % Taxa de aprendizagem
 
 num_classes = 10;
@@ -88,7 +88,7 @@ sigmoid = @(valor)1./(1 + exp(-valor));
 mapped_labels = eye(num_classes);
 
 tic();
-for t=1:Ne,
+for t=1:numero_de_epocas,
     %Itr=randperm(Ntr);
     %Xtr=Xtr(:,Itr);  % Embaralha dados a cada epoca de treinamento
     %Dtr=Dtr(Itr);
@@ -147,7 +147,7 @@ Pacertos=100*Nacertos/Nts
 
 
 
-save -text ps_sem_pca.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos;
+save -text ps_sem_pca.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
 
 
 

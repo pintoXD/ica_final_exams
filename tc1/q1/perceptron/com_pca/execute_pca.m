@@ -1,6 +1,5 @@
 function x_with_pca = execute_pca(Xc)
     # pkg load statistics
-
     Cx = cov(Xc');  % Estima a matriz de covariancia dos dados simulados
     [V L]=eig(Cx); L=diag(L);
     [L I]=sort(L,'descend'); V=V(:,I);
