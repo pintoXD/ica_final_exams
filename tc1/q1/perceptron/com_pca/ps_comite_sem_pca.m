@@ -72,12 +72,16 @@ Xtr=X;  Dtr=X_labels;
 % Dados de teste (Xts, Dts)
 Xts=D;  Dts=D_labels;
 
+
+%Aplica PCA nos dados de teste e treino
+Xtr=execute_pca(Xtr); Xts=execute_pca(Xts);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 3: Estimar os parametros do classificador (pesos e limiares) %%
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(2);  % dimensao do vetor de entrada
-Ne=5;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+numero_de_epocas=5;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
 alfa=0.01; % Taxa de aprendizagem
 
 num_classes = 10;
@@ -99,7 +103,7 @@ for m=1:num_maquinas,
     Dtr_maquina_atual = Dtr(bootrstrapped_index,:);
     maquina=m
     
-    for t=1:Ne,
+    for t=1:numero_de_epocas,
 
         Epoca=t
         acc_erro_quad=0;  % Acumula erro quadratico por vetor em uma epoca
@@ -162,7 +166,7 @@ Perros_neg=100*Nerros_neg/Nts
 Pacertos=100*Nacertos/Nts
 
 
-
+save -text ps_comite_sem_pca.txt numero_de_epocas num_maquinas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos;
 
 
 

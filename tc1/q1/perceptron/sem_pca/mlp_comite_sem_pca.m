@@ -262,20 +262,26 @@ Tx_OK_media=mean(Tx_OK); % Exibe media da taxa de acerto para as Nr rodadas
 Tx_OK_desvio=std(Tx_OK); % Exibe desvio-padrao da taxa de acerto para as Nr rodadas
 Tx_OK_mediana=median(Tx_OK);  % Exibe mediana da taxa de acerto dentre as Nr rodadas
 
+
+
 STATS=[Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana]
 
-% % Graficos
-% figure;
-% plot(1:Ne,EQMtrain{r_max},'linewidth',2); xlabel('Epocas');
-% ylabel('Erro Medio Quadratico');
-% title('Curva de Aprendizagem para Melhor Caso')
-% grid, set(gca,"fontsize", 12)
+save -append mlp_comite_out.txt Ne Nr Nh No numero_maquinas Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana;
 
-% figure;
-% plot(1:Ne,EQMtrain{r_min},'linewidth',2); xlabel('Epocas');
-% ylabel('Erro Medio Quadratico');
-% title('Curva de Aprendizagem para Pior Caso')
-% grid, set(gca,"fontsize", 12)
+% Graficos
+figure;
+plot(1:Ne,EQMtrain{r_max},'linewidth',2); xlabel('Epocas');
+ylabel('Erro Medio Quadratico');
+title('Curva de Aprendizagem para Melhor Caso')
+grid, set(gca,"fontsize", 12);
+print("mlp_comite_eqm_melhor_caso.png");
+
+figure;
+plot(1:Ne,EQMtrain{r_min},'linewidth',2); xlabel('Epocas');
+ylabel('Erro Medio Quadratico');
+title('Curva de Aprendizagem para Pior Caso')
+grid, set(gca,"fontsize", 12);
+print("mlp_comite_eqm_pior_caso.png");
 
 % figure; boxplot(Tx_OK,'linewidth',2);
 % title('Boxplot da taxa de acerto para Nr rodadas')

@@ -147,7 +147,7 @@ Pacertos=100*Nacertos/Nts
 
 
 
-
+save -text ps_sem_pca.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos;
 
 
 
