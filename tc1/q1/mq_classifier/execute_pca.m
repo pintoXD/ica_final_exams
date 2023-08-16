@@ -7,9 +7,9 @@ function x_with_pca = execute_pca(Xc)
     VEi=100*L/sum(L);  % Variancia explicada pelo i-esimo autovalor
     VEq=100*cumsum(L)/sum(L);   % Variancia explicada pelos q primeiros autovalores
 
-    figure; plot(VEq,'r-','linewidth',2);
-    xlabel('Numero de autovalores principais (q)'); ylabel('Variancia Explicada');
-    set(gca, "fontsize", 14)
+    % figure; plot(VEq,'r-','linewidth',2);
+    % xlabel('Numero de autovalores principais (q)'); ylabel('Variancia Explicada');
+    % set(gca, "fontsize", 14)
 
     [V2 L2 VEi2] = pcacov(Cx);  % Calcula autovalores e autovetores da matriz Cx
     VEq2=cumsum(VEi);

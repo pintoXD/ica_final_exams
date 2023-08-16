@@ -6,6 +6,7 @@
 
 clear; clc; close all;
 pkg load nan
+pkg load statistics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 1: Carregar banco de dados %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,6 +91,7 @@ Perros_pos=100*Nerros_pos/Nts
 Perros_neg=100*Nerros_neg/Nts
 Pacertos=100*Nacertos/Nts
 
+save -text mq_com_pca_out.txt Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos;
 
 
 

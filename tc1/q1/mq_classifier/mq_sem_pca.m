@@ -88,7 +88,7 @@ Pacertos=100*Nacertos/Nts
 
 
 
-
+save -text mq_sem_pca_out.txt Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos;
 
 
 

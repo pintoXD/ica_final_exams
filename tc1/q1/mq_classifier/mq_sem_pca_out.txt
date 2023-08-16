@@ -1,0 +1,31 @@
+# Created by Octave 6.4.0, Wed Aug 16 12:31:20 2023 -03 <otto@SOUSAOTT2>
+# name: Nerros_pos
+# type: scalar
+3702
+
+
+# name: Nerros_neg
+# type: scalar
+3840
+
+
+# name: Nacertos
+# type: scalar
+52458
+
+
+# name: Perros_pos
+# type: scalar
+6.1699999999999999
+
+
+# name: Perros_neg
+# type: scalar
+6.4000000000000004
+
+
+# name: Pacertos
+# type: scalar
+87.430000000000007
+
+
