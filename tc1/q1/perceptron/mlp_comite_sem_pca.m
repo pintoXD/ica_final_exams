@@ -16,6 +16,7 @@
 clear; clc; close all
 pkg load nan
 pkg load statistics
+pkg load statistics-bootstrap
 
 
 % Carrega DADOS
@@ -68,35 +69,46 @@ num_pixels_imagem = N_dados_treino(2);
 num_imagens_teste = N_dados_teste(1);
 num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
-numero_maquinas = 5; %Numero de maquinas do comite
 
+numero_maquinas = 5; %Numero de maquinas do comite
 Ne = 1; % No. de epocas de treinamento
-Nr = 1;   % No. de rodadas de treinamento/teste
+Nr = 2;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
 
 eta=0.05;   % Passo de aprendizagem
 mom=0.75;  % Fator de momento
 
-vetor_MM = zeros(1, Nh, num_classes);
-vetor_WW = zeros(1, num_pixels_imagem, Nh);
+% vetor_MM = zeros(1, Nh, num_classes);
+% vetor_WW = zeros(1, num_pixels_imagem, Nh);
 % Define tamanho dos conjuntos de treinamento/teste (hold out)
-# ptrn=0.8;    % Porcentagem usada para treino
-# ptst=1-ptrn; % Porcentagem usada para teste
 my_tic = tic ();
 EQMtested = zeros(numero_maquinas, 1);
 
+comite_OUT = zeros(numero_maquinas, num_imagens_teste, num_classes);
+comite_soma_out_total = zeros(num_imagens_teste, num_classes);
+
+tic ();
 for m=1:numero_maquinas,
-    num_imagens_treino_maquina = floor(num_imagens_treino/numero_maquinas);
-    limite_inferior = ((m-1)*num_imagens_treino_maquina) + 1;
-    limite_superior = (m)*num_imagens_treino_maquina;
-    dados_treino_maquina = dados_treino(limite_inferior:limite_superior, :);
-    alvos_treino_maquina = alvos_treino(limite_inferior:limite_superior, :);
+    
+    I=randperm(num_imagens_treino);
+    dados_treino=dados_treino(I,:);
+    alvos_treino=alvos_treino(I,:);
+
+    % num_imagens_treino_maquina = floor(num_imagens_treino/numero_maquinas);
+    % limite_inferior = ((m-1)*num_imagens_treino_maquina) + 1;
+    % limite_superior = (m)*num_imagens_treino_maquina;
+    % dados_treino_maquina = dados_treino(limite_inferior:limite_superior, :);
+    % alvos_treino_maquina = alvos_treino(limite_inferior:limite_superior, :);
     % num_imagens_treino_maquina = num_imagens_treino;
-    limite_inferior = ((m-1)*num_imagens_treino_maquina) + 1;
-    limite_superior = (m)*num_imagens_treino_maquina;
-    % dados_treino_maquina = dados_treino;
-    % alvos_treino_maquina = alvos_treino;
+    % limite_inferior = ((m-1)*num_imagens_treino_maquina) + 1;
+    % limite_superior = (m)*num_imagens_treino_maquina;
+    num_imagens_treino_maquina = num_imagens_treino;
+    bootrstrapped_index = boot(1:1:num_imagens_treino_maquina, 1); %Aplica bootstrap aos index para depois pegar os elementos
+    dados_treino_maquina = dados_treino(bootrstrapped_index,:);
+    alvos_treino_maquina = alvos_treino(bootrstrapped_index,:);
+    maquina=m
+    Nh = randi(100)
 
 
     for r=1:Nr,
@@ -106,14 +118,15 @@ for m=1:numero_maquinas,
         % Inicia matrizes de pesos
         WW=0.1*rand(num_pixels_imagem, Nh);   % Pesos entrada -> camada oculta
         WW_old=WW;              % Necessario para termo de momento
-        
+
         MM=0.1*rand(Nh,num_classes);   % Pesos camada oculta -> camada de saida
         MM_old = MM;            % Necessario para termo de momento
-        
+
         %%% ETAPA DE TREINAMENTO
         for t=1:Ne,   % Inicio do loop de epocas
-
-            % I=randperm(Ntrain); P=P(:,I); T1=T1(:,I);   % Embaralha vetores de treinamento e saidas desejadas
+            % Embaralha vetores de treinamento e saidas desejadas
+            I=randperm(num_imagens_treino_maquina);
+            dados_treino_maquina=dados_treino_maquina(I,:); alvos_treino_maquina=alvos_treino_maquina(I,:);
 
             EQ=0;
             for tt=1:num_imagens_treino_maquina,   % Inicia LOOP de epocas de treinamento
@@ -151,8 +164,8 @@ for m=1:numero_maquinas,
                 WW = WW + eta*X'*DDi + mom*(WW - WW_old);
                 WW_old=WW_aux;
             end   % Fim de uma epoca
-            vetor_WW(m, :, :) = WW;
-            vetor_MM(m, :, :) = MM;
+            % vetor_WW(m, :, :) = WW;
+            % vetor_MM(m, :, :) = MM;
             % MEDIA DO ERRO QUADRATICO P/ EPOCA
             EQMepoca(t)=EQ/num_imagens_treino_maquina;
         end   % Fim do loop de treinamento
@@ -160,10 +173,38 @@ for m=1:numero_maquinas,
         EQMtrain{r}=EQMepoca;   % Salva curva de aprendizagem para a r-esima repeticao
     end
 
+    % ww_maquina_atual = reshape(vetor_WW(m, :, :), num_pixels_imagem, Nh);
+    % mm_maquina_atual = reshape(vetor_MM(m, :, :), Nh, num_classes);
+    ww_maquina_atual = WW;
+    mm_maquina_atual = MM;
+    for tt=1:num_imagens_teste,
+        % CAMADA OCULTA
+        X=dados_teste(tt, :); % Constroi vetor de entrada com adicao da entrada x0=1
+        Ui = X*ww_maquina_atual;            % Ativacao (net) dos neuronios da camada oculta
+        Yi = 1./(1+exp(-Ui)); % Saida entre [0,1] (funcao logistica)
+
+        % CAMADA DE SAIDA
+        Y=Yi;           % Constroi vetor de entrada DESTA CAMADA com adicao da entrada y0=-1
+        Uk = Y*mm_maquina_atual;          % Ativacao (net) dos neuronios da camada de saida
+        Ok_comite = 1./(1+exp(-Uk)); % Saida entre [0,1] (funcao logistica)
+        % OUT=[OUT; Ok];    % Armazena saidas da rede
+        comite_OUT(m, tt, :) =  Ok_comite;    % Armazena saidas da rede
+
+        classe_mapeada = mapa_de_classes(alvos_teste(tt) + 1, :); %Especie de one-hot enconding
+        Ek = classe_mapeada - Ok_comite;           % erro entre a saida desejada e a saida da rede
+
+        % ERRO QUADRATICO GLOBAL (todos os neuronios) POR VETOR DE ENTRADA
+        EQMtested(m) = EQMtested(m) + 0.5*sum(Ek.^2);
+    end
+
+    %Faz uma soma de todas as saídas possíveis
+    comite_soma_out_total = comite_soma_out_total + reshape(comite_OUT(m, : , : ), num_imagens_teste, num_classes);
+
 end
 
 
 %Realizando a avaliação das saidas do comitê
+%{
 comite_OUT = zeros(numero_maquinas, num_imagens_teste, num_classes);
 comite_soma_out_total = zeros(num_imagens_teste, num_classes);
 comite_EQMtested=0;
@@ -193,7 +234,7 @@ for m=1:numero_maquinas,
         %Faz uma soma de todas as saídas possíveis
         comite_soma_out_total = comite_soma_out_total + reshape(comite_OUT(m, : , : ), num_imagens_teste, num_classes);
 end
-
+%}
 
 %Faz uma média de todas as saídas e salva as repostas em uma nova variavel
 comite_out_oficial = comite_soma_out_total/numero_maquinas;
