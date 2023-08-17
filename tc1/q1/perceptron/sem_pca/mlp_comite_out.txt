@@ -1,0 +1,56 @@
+# Created by Octave 6.4.0, Thu Aug 17 08:50:39 2023 -03 <otto@SOUSAOTT2>
+# name: Ne
+# type: scalar
+5
+
+
+# name: Nr
+# type: scalar
+3
+
+
+# name: Nh
+# type: scalar
+84
+
+
+# name: No
+# type: scalar
+10
+
+
+# name: numero_maquinas
+# type: scalar
+25
+
+
+# name: Tx_OK_media
+# type: scalar
+97.33026697330267
+
+
+# name: Tx_OK_desvio
+# type: scalar
+NaN
+
+
+# name: Tx_OK_min
+# type: scalar
+97.33026697330267
+
+
+# name: Tx_OK_max
+# type: scalar
+97.33026697330267
+
+
+# name: Tx_OK_mediana
+# type: scalar
+97.33026697330267
+
+
+# name: elapsed_time
+# type: scalar
+37828.141555070877
+
+
