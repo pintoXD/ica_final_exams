@@ -146,3 +146,9 @@ warning: called from
     mlp_com_pca at line 17 column 1
 
 Repeticao = 1
+Repeticao = 2
+elapsed_time = 6357.1
+STATS =
+
+   29.6070    1.8383   28.3072   30.9069   29.6070
+

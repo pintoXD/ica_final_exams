@@ -146,5 +146,5 @@ warning: called from
     mlp_comite_sem_pca at line 17 column 1
 
 maquina = 1
-Nh = 70
+Nh = 80
 Repeticao = 1

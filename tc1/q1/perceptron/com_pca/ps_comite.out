@@ -145,9 +145,13 @@ warning: called from
     pkg at line 588 column 7
     ps_comite_com_pca at line 8 column 1
 
-error: out of memory or dimension too large for Octave's index type
-error: called from
-    covm at line 227 column 21
-    cov at line 91 column 5
-    execute_pca at line 3 column 8
-    ps_comite_com_pca at line 77 column 4
+maquina = 1
+Epoca = 1
+Epoca = 2
+Epoca = 3
+Epoca = 4
+Epoca = 5
+Epoca = 6
+Epoca = 7
+Epoca = 8
+Epoca = 9

@@ -74,23 +74,24 @@ Xts=D;  Dts=D_labels;
 
 
 %Aplica PCA nos dados de teste e treino
-Xtr=execute_pca(Xtr); Xts=execute_pca(Xts);
+pca_Xtr=execute_pca(Xtr'); pca_Xts=execute_pca(Xts');
+Xtr = pca_Xtr'; Xts = pca_Xts';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 3: Estimar os parametros do classificador (pesos e limiares) %%
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(2);  % dimensao do vetor de entrada
-numero_de_epocas=500;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+numero_de_epocas=50;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
 alfa=0.01; % Taxa de aprendizagem
 
 num_classes = 10;
+num_maquinas = 25;
 W=rand(p,num_classes);  % Inicializacao do vetor de pesos
 pesos_totais_maquinas = 0;
 Ntr = n(1);
 %Ntr = 10;
 Nts = size(Xts)(1);
-num_maquinas = 5;
 
 sigmoid = @(valor)1./(1 + exp(-valor));
 mapped_labels = eye(num_classes);

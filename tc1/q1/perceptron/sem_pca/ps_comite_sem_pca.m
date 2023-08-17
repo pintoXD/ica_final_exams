@@ -77,7 +77,7 @@ Xts=D;  Dts=D_labels;
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 p=n(2);  % dimensao do vetor de entrada
-numero_de_epocas=300;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
+numero_de_epocas=50;  % Numero de epocas de treinamento (numero de vezes que o conjunto de treinamento eh reapresentado)
 alfa=0.01; % Taxa de aprendizagem
 
 num_classes = 10;
@@ -86,7 +86,7 @@ pesos_totais_maquinas = 0;
 Ntr = n(1);
 %Ntr = 10;
 Nts = size(Xts)(1);
-num_maquinas = 5;
+num_maquinas = 25;
 
 sigmoid = @(valor)1./(1 + exp(-valor));
 mapped_labels = eye(num_classes);

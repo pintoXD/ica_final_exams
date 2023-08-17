@@ -71,8 +71,8 @@ num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
 
 numero_maquinas = 25; %Numero de maquinas do comite
-Ne = 10; % No. de epocas de treinamento
-Nr = 5;   % No. de rodadas de treinamento/teste
+Ne = 5; % No. de epocas de treinamento
+Nr = 3;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
 

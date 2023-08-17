@@ -57,8 +57,10 @@ alvos_treino=[ones(1,1); alvos_treino];
 alvos_teste=[ones(1,1); alvos_teste];
 
 %Aplica PCA nesses dados;
-dados_treino = execute_pca(dados_treino);
-dados_teste = execute_pca(dados_teste);
+pca_dados_treino = execute_pca(dados_treino');
+pca_dados_teste = execute_pca(dados_teste');
+dados_treino = pca_dados_treino';
+dados_teste = pca_dados_teste';
 
 N_dados_treino=size(dados_treino);  % N(1)=Numero de imagens, N(2)=Número de pixels da i-ésima imagem
 N_dados_teste=size(dados_teste);  % N(1)=Numero de imagens, N(2)=Número de pixels da i-ésima imagem
@@ -75,8 +77,8 @@ num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
 
 numero_maquinas = 25; %Numero de maquinas do comite
-Ne = 50; % No. de epocas de treinamento
-Nr = 2;   % No. de rodadas de treinamento/teste
+Ne = 5; % No. de epocas de treinamento
+Nr = 3;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
 

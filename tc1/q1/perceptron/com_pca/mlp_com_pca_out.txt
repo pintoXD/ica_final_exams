@@ -49,3 +49,53 @@ NaN
 59.604167938232422
 
 
+# name: Ne
+# type: scalar
+50
+
+
+# name: Nr
+# type: scalar
+2
+
+
+# name: Nh
+# type: scalar
+28
+
+
+# name: No
+# type: scalar
+10
+
+
+# name: Tx_OK_media
+# type: scalar
+29.607039296070393
+
+
+# name: Tx_OK_desvio
+# type: scalar
+1.838293801704852
+
+
+# name: Tx_OK_min
+# type: scalar
+28.307169283071694
+
+
+# name: Tx_OK_max
+# type: scalar
+30.906909309069093
+
+
+# name: Tx_OK_mediana
+# type: scalar
+29.607039296070393
+
+
+# name: elapsed_time
+# type: scalar
+6357.0508811473846
+
+
