@@ -33,7 +33,7 @@ Ntest=length(Xtest);    % No. dados de teste
 
 % DEFINE ARQUITETURA DA REDE
 %===========================
-Ne = 500; % No. de epocas de treinamento
+Ne = 100; % No. de epocas de treinamento
 Nr = 1;   % No. de rodadas de treinamento/teste
 Nh = 20;   % No. de neuronios na camada oculta
 No = 2;   % No. de neuronios na camada de saida
@@ -170,5 +170,5 @@ plot(RESULTS(:,1),RESULTS(:,2),'ro','linewidth',2,'markersize',10)
 hold on; plot(RESULTS(:,3),RESULTS(:,4),'b+','linewidth',2,'markersize',10);
 xlabel('\theta_1'); ylabel('\theta_2');
 legend('True coordinate','Estimated coordinate')
-et(gca,"fontsize", 12)
+set(gca,"fontsize", 12)
 

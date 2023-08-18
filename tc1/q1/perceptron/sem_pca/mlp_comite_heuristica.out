@@ -146,13 +146,5 @@ warning: called from
     mlp_comite_sem_pca at line 17 column 1
 
 maquina = 1
-Nh = 226
-Repeticao = 1
-Repeticao = 2
-maquina = 2
-Nh = 216
-Repeticao = 1
-Repeticao = 2
-maquina = 3
-Nh = 391
+Nh = 125
 Repeticao = 1

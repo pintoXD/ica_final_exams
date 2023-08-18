@@ -71,8 +71,8 @@ num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
 
 numero_maquinas = 25; %Numero de maquinas do comite
-Ne = 5; % No. de epocas de treinamento
-Nr = 3;   % No. de rodadas de treinamento/teste
+Ne = 10; % No. de epocas de treinamento
+Nr = 1;   % No. de rodadas de treinamento/teste
 Nh = 28;   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
 
@@ -108,8 +108,10 @@ for m=1:numero_maquinas,
     dados_treino_maquina = dados_treino(bootrstrapped_index,:);
     alvos_treino_maquina = alvos_treino(bootrstrapped_index,:);
     maquina=m
-    Nh = randi(100)
-
+    Nh = randi([89,397]) %Numero de neuronios variável de acordo com as regras heurísticas
+                         %Limite inferior é definido por (N-1)/(p+2) onde N é a quantidade de
+                        % dados disponível e p o número de entradas.
+    Nh_por_maquina(m) = Nh;
 
     for r=1:Nr,
 
@@ -266,7 +268,7 @@ Tx_OK_mediana=median(Tx_OK);  % Exibe mediana da taxa de acerto dentre as Nr rod
 
 STATS=[Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana]
 
-save -append mlp_comite_out.txt Ne Nr Nh No numero_maquinas Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana elapsed_time;
+save -append mlp_comite_out_heuristica.txt Ne Nr Nh No Nh_por_maquina numero_maquinas Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana elapsed_time;
 
 % Graficos
 figure;
@@ -274,14 +276,14 @@ plot(1:Ne,EQMtrain{r_max},'linewidth',2); xlabel('Epocas');
 ylabel('Erro Medio Quadratico');
 title('Curva de Aprendizagem para Melhor Caso')
 grid, set(gca,"fontsize", 12);
-print("mlp_comite_eqm_melhor_caso.png");
+print("mlp_comite_eqm_melhor_caso_heuristica.png");
 
 figure;
 plot(1:Ne,EQMtrain{r_min},'linewidth',2); xlabel('Epocas');
 ylabel('Erro Medio Quadratico');
 title('Curva de Aprendizagem para Pior Caso')
 grid, set(gca,"fontsize", 12);
-print("mlp_comite_eqm_pior_caso.png");
+print("mlp_comite_eqm_pior_caso_heuristica.png");
 
 % figure; boxplot(Tx_OK,'linewidth',2);
 % title('Boxplot da taxa de acerto para Nr rodadas')

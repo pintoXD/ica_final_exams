@@ -31,8 +31,8 @@ Ng=500;   % Numero de iteracoes
 %hold on
 %%%%%%%%%%%
 
-limites=[-6 11];
-k = 4;
+limites=[-11 11];
+k = 6;
 x_best=(unifrnd(limites(1), limites(2), 1, k+1)); 	% Gera solucao inicial dentro do intervalo permitido
 % B=polyfit(v, P, k_best);
 ypred = polyval(x_best, v);  % Avalia solucao candidata
@@ -53,7 +53,7 @@ for t=1:Ng,
 
     x_cand=(unifrnd(limites(1), limites(2), 1, k+1));
     cands = [cands; x_cand];
-    ypred = polyval(x_best, v);
+    ypred = polyval(x_cand, v);
     erro = y - ypred;
     SEQ = sum(erro.^2); % Gera solucao candidata
 
@@ -78,6 +78,7 @@ x_best, Fbest
 
 figure; plot(aptidao,'linewidth',3);
 xlabel('Iteracao'); ylabel('y=f(x)');
-set(gca, "fontsize", 14)
+set(gca, "fontsize", 14);
 
-plot(v,ypred,'ro');  %%% Plota solucao final
+figure;
+plot(v,polyval(x_best, v),'ro');  %%% Plota solucao final

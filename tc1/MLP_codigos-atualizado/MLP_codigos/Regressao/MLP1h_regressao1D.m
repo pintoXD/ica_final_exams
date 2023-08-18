@@ -43,7 +43,7 @@ Ry=2*(Real(:,2) - d_min)/(d_max-d_min)-1; % normaliza entradas entre -1 e 1
 
 % DEFINE ARQUITETURA DA REDE
 %===========================
-Ne = 10000; % No. de epocas de treinamento
+Ne = 500; % No. de epocas de treinamento
 Ni = 1;   % No. de unidades de entrada
 Nh = 50;   % No. de neuronios na camada oculta
 No = 1;   % No. de neuronios na camada de saida
