@@ -31,8 +31,8 @@ Ng=500;   % Numero de iteracoes
 %hold on
 %%%%%%%%%%%
 
-limites=[-11 11];
-k = 6;
+limites=[-6 10];
+k = 5;
 x_best=(unifrnd(limites(1), limites(2), 1, k+1)); 	% Gera solucao inicial dentro do intervalo permitido
 % B=polyfit(v, P, k_best);
 ypred = polyval(x_best, v);  % Avalia solucao candidata
