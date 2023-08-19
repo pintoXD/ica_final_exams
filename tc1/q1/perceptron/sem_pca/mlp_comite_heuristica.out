@@ -211,3 +211,19 @@ Repeticao = 1
 maquina = 22
 Nh = 229
 Repeticao = 1
+maquina = 23
+Nh = 334
+Repeticao = 1
+maquina = 24
+Nh = 330
+Repeticao = 1
+maquina = 25
+Nh = 383
+Repeticao = 1
+RESULTADOS = [](0x0)
+elapsed_time = 7.3092e+04
+STATS =
+
+   98.230      NaN   98.230   98.230   98.230
+
+fatal: caught signal Segmentation fault -- stopping myself...

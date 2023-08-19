@@ -1,0 +1,63 @@
+# Created by Octave 6.4.0, Fri Aug 18 19:33:17 2023 -03 <otto@SOUSAOTT2>
+# name: Ne
+# type: scalar
+10
+
+
+# name: Nr
+# type: scalar
+1
+
+
+# name: Nh
+# type: scalar
+383
+
+
+# name: No
+# type: scalar
+10
+
+
+# name: Nh_por_maquina
+# type: matrix
+# rows: 1
+# columns: 25
+ 125 113 211 358 296 245 100 369 302 209 189 267 175 237 146 363 183 363 144 333 321 229 334 330 383
+
+
+# name: numero_maquinas
+# type: scalar
+25
+
+
+# name: Tx_OK_media
+# type: scalar
+98.230176982301771
+
+
+# name: Tx_OK_desvio
+# type: scalar
+NaN
+
+
+# name: Tx_OK_min
+# type: scalar
+98.230176982301771
+
+
+# name: Tx_OK_max
+# type: scalar
+98.230176982301771
+
+
+# name: Tx_OK_mediana
+# type: scalar
+98.230176982301771
+
+
+# name: elapsed_time
+# type: scalar
+73091.840404987335
+
+
