@@ -1,4 +1,4 @@
-# Created by Octave 6.4.0, Sat Aug 19 23:57:12 2023 -03 <otto@SOUSAOTT2>
+# Created by Octave 6.4.0, Sun Aug 20 10:50:24 2023 -03 <otto@SOUSAOTT2>
 # name: Nerros_pos
 # type: scalar
 858
@@ -31,6 +31,6 @@
 
 # name: elapsed_time
 # type: scalar
-39.754470109939575
+41.698003053665161
 
 
