@@ -3,146 +3,244 @@ warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/kurtosis.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/meansq.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/sumsq.m shadows a built-in function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/moment.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/corrcoef.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/quantile.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/ranks.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/spearman.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/zscore.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/range.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/var.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/mean.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/std.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/cov.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/detrend.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/median.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/iqr.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/prctile.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/mad.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
 warning: function /usr/share/octave/packages/nan-3.6.1/skewness.m shadows a core library function
 warning: called from
     load_packages_and_dependencies at line 56 column 5
     load_packages at line 53 column 3
     pkg at line 588 column 7
-    mlp_sem_pca at line 17 column 1
+    ps_com_pca at line 8 column 1
 
-Repeticao = 1
+size_Z =
+
+      87   70000
+
+Epoca = 1
+Epoca = 2
+Epoca = 3
+Epoca = 4
+Epoca = 5
+Epoca = 6
+Epoca = 7
+Epoca = 8
+Epoca = 9
+Epoca = 10
+Epoca = 11
+Epoca = 12
+Epoca = 13
+Epoca = 14
+Epoca = 15
+Epoca = 16
+Epoca = 17
+Epoca = 18
+Epoca = 19
+Epoca = 20
+Epoca = 21
+Epoca = 22
+Epoca = 23
+Epoca = 24
+Epoca = 25
+Epoca = 26
+Epoca = 27
+Epoca = 28
+Epoca = 29
+Epoca = 30
+Epoca = 31
+Epoca = 32
+Epoca = 33
+Epoca = 34
+Epoca = 35
+Epoca = 36
+Epoca = 37
+Epoca = 38
+Epoca = 39
+Epoca = 40
+Epoca = 41
+Epoca = 42
+Epoca = 43
+Epoca = 44
+Epoca = 45
+Epoca = 46
+Epoca = 47
+Epoca = 48
+Epoca = 49
+Epoca = 50
+Epoca = 51
+Epoca = 52
+Epoca = 53
+Epoca = 54
+Epoca = 55
+Epoca = 56
+Epoca = 57
+Epoca = 58
+Epoca = 59
+Epoca = 60
+Epoca = 61
+Epoca = 62
+Epoca = 63
+Epoca = 64
+Epoca = 65
+Epoca = 66
+Epoca = 67
+Epoca = 68
+Epoca = 69
+Epoca = 70
+Epoca = 71
+Epoca = 72
+Epoca = 73
+Epoca = 74
+Epoca = 75
+Epoca = 76
+Epoca = 77
+Epoca = 78
+Epoca = 79
+Epoca = 80
+Epoca = 81
+Epoca = 82
+Epoca = 83
+Epoca = 84
+Epoca = 85
+Epoca = 86
+Epoca = 87
+Epoca = 88
+Epoca = 89
+Epoca = 90
+Epoca = 91
+Epoca = 92
+Epoca = 93
+Epoca = 94
+Epoca = 95

@@ -30,8 +30,8 @@ D = reshape(D, N_d(1),N_d(2)*N_d(3)); %Transformando de uma matriz 3D para uma 2
 X=X'; D=D'; X_labels=X_labels'; D_labels=D_labels';
 
 num_classes = 10;
-X=double(X);
-D=double(D);
+X=double(X)/255.0;
+D=double(D)/255.0;
 X_labels=double(X_labels);
 D_labels=double(D_labels);
 

@@ -1,0 +1,201 @@
+# Created by Octave 6.4.0, Sun Aug 20 02:21:48 2023 -03 <otto@SOUSAOTT2>
+# name: Ne
+# type: scalar
+1
+
+
+# name: Nr
+# type: scalar
+1
+
+
+# name: Nh
+# type: scalar
+48
+
+
+# name: No
+# type: scalar
+10
+
+
+# name: Tx_OK_media
+# type: scalar
+93.400659934006597
+
+
+# name: Tx_OK_desvio
+# type: scalar
+NaN
+
+
+# name: Tx_OK_min
+# type: scalar
+93.400659934006597
+
+
+# name: Tx_OK_max
+# type: scalar
+93.400659934006597
+
+
+# name: Tx_OK_mediana
+# type: scalar
+93.400659934006597
+
+
+# name: elapsed_time
+# type: scalar
+4.6669268608093262
+
+
+# name: Ne
+# type: scalar
+1
+
+
+# name: Nr
+# type: scalar
+1
+
+
+# name: Nh
+# type: scalar
+48
+
+
+# name: No
+# type: scalar
+10
+
+
+# name: Tx_OK_media
+# type: scalar
+93.84061593840616
+
+
+# name: Tx_OK_desvio
+# type: scalar
+NaN
+
+
+# name: Tx_OK_min
+# type: scalar
+93.84061593840616
+
+
+# name: Tx_OK_max
+# type: scalar
+93.84061593840616
+
+
+# name: Tx_OK_mediana
+# type: scalar
+93.84061593840616
+
+
+# name: elapsed_time
+# type: scalar
+5.2200100421905518
+
+
+# name: Ne
+# type: scalar
+100
+
+
+# name: Nr
+# type: scalar
+1
+
+
+# name: Nh
+# type: scalar
+48
+
+
+# name: No
+# type: scalar
+10
+
+
+# name: Tx_OK_media
+# type: scalar
+95.920407959204084
+
+
+# name: Tx_OK_desvio
+# type: scalar
+NaN
+
+
+# name: Tx_OK_min
+# type: scalar
+95.920407959204084
+
+
+# name: Tx_OK_max
+# type: scalar
+95.920407959204084
+
+
+# name: Tx_OK_mediana
+# type: scalar
+95.920407959204084
+
+
+# name: elapsed_time
+# type: scalar
+379.23337507247925
+
+
+# name: Ne
+# type: scalar
+100
+
+
+# name: Nr
+# type: scalar
+1
+
+
+# name: Nh
+# type: scalar
+48
+
+
+# name: No
+# type: scalar
+10
+
+
+# name: Tx_OK_media
+# type: scalar
+96.070392960703927
+
+
+# name: Tx_OK_desvio
+# type: scalar
+NaN
+
+
+# name: Tx_OK_min
+# type: scalar
+96.070392960703927
+
+
+# name: Tx_OK_max
+# type: scalar
+96.070392960703927
+
+
+# name: Tx_OK_mediana
+# type: scalar
+96.070392960703927
+
+
+# name: elapsed_time
+# type: scalar
+1136.4741439819336
+
+

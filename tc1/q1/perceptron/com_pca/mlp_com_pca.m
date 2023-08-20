@@ -47,20 +47,27 @@ dados_teste = reshape(dados_teste, N_dados_teste(1),N_dados_teste(2)*N_dados_tes
 dados_treino=(dados_treino/255.00); %Normaliza os valores dos pixels entre 0 e 1
 dados_teste=(dados_teste/255.00); %Normaliza os valores dos pixels entre 0 e 1
 
+
+aux_pca = [dados_treino; dados_teste]; %Une dados de treino e teste para fazer PCA
+aux_pca_executado = execute_pca(aux_pca'); %Executa PCA em cima dos dados de treino e teste
+
+dados_treino = aux_pca_executado(:, 1:N_dados_treino(1))'; %Separa os dados de treino de novo
+dados_teste = aux_pca_executado(:, N_dados_treino(1) + 1:end)'; %Separa os dados de teste de novo
+
+size_dados_treino_pca = size(dados_treino);
+size_dados_teste_pca = size(dados_teste);
+
 %Adiciona uma linha de 1s para servir de bias dos conjuntos de dados
-dados_treino = [ones(1, N_dados_treino(2)*N_dados_treino(3)); dados_treino];
-dados_teste = [ones(1, N_dados_teste(2)*N_dados_teste(3)); dados_teste];
+dados_treino = [ones(1, size_dados_treino_pca(2)); dados_treino];
+dados_teste = [ones(1, size_dados_teste_pca(2)); dados_teste];
+
+
+% dados_treino = [ones(1, N_dados_treino(2)*N_dados_treino(3)); dados_treino];
+% dados_teste = [ones(1, N_dados_teste(2)*N_dados_teste(3)); dados_teste];
 
 %Adiciona uma linha de 1's para servir de correspondente ao bias adicionado aos dados de treino
 alvos_treino=[ones(1,1); alvos_treino];
 alvos_teste=[ones(1,1); alvos_teste];
-
-%Aplica PCA nesses dados;
-pca_dados_treino = execute_pca(dados_treino');
-pca_dados_teste = execute_pca(dados_teste');
-dados_treino = pca_dados_treino';
-dados_teste = pca_dados_teste';
-
 
 N_dados_treino=size(dados_treino);  % N(1)=Numero de imagens, N(2)=Número de pixels da i-ésima imagem
 N_dados_teste=size(dados_teste);  % N(1)=Numero de imagens, N(2)=Número de pixels da i-ésima imagem
@@ -75,9 +82,9 @@ num_pixels_imagem = N_dados_treino(2);
 num_imagens_teste = N_dados_teste(1);
 num_alvos_teste = N_alvos_teste(1);
 mapa_de_classes = eye(num_classes); %Matriz diagonal 10x10 que auxilia no cálculo e rastreamento do erro
-Ne = 50; % No. de epocas de treinamento
-Nr = 2;   % No. de rodadas de treinamento/teste
-Nh = 88;   % No. de neuronios na camada oculta
+Ne = 100; % No. de epocas de treinamento
+Nr = 1;   % No. de rodadas de treinamento/teste
+Nh = floor((size_dados_treino_pca(2) + num_classes)/2);   % No. de neuronios na camada oculta
 No = num_classes;   % No. de neuronios na camada de saida
 
 eta=0.05;   % Passo de aprendizagem
@@ -92,7 +99,8 @@ for r=1:Nr,
     Repeticao=r,
 
     % Inicia matrizes de pesos
-    WW=0.1*rand(num_pixels_imagem, Nh);   % Pesos entrada -> camada oculta
+    num_componentes_principais = size_dados_treino_pca(2);
+    WW=0.1*rand(num_componentes_principais, Nh);   % Pesos entrada -> camada oculta
     WW_old=WW;              % Necessario para termo de momento
 
     MM=0.1*rand(Nh,num_classes);   % Pesos camada oculta -> camada de saida
@@ -191,7 +199,7 @@ Tx_OK_media=mean(Tx_OK); % Exibe media da taxa de acerto para as Nr rodadas
 Tx_OK_desvio=std(Tx_OK); % Exibe desvio-padrao da taxa de acerto para as Nr rodadas
 Tx_OK_mediana=median(Tx_OK);  % Exibe mediana da taxa de acerto dentre as Nr rodadas
 
-save -append mlp_com_pca_out.txt Ne Nr Nh No Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana elapsed_time;
+save -append mlp_com_pca_20_08_out.txt Ne Nr Nh No Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana elapsed_time;
 
 STATS=[Tx_OK_media Tx_OK_desvio Tx_OK_min Tx_OK_max Tx_OK_mediana]
 

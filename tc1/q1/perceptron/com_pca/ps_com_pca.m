@@ -46,8 +46,18 @@ X_labels=[ones(1,1); X_labels];
 X=double(X/255.00); %Normaliza os valores dos pixels entre 0 e 1
 D=double(D/255.00); %Normaliza os valores dos pixels entre 0 e 1
 
-X = [ones(1, N_x(2)*N_x(3)); X];
-D = [ones(1, N_d(2)*N_d(3)); D];
+
+aux_pca = [X; D]; %Une dados de treino e teste para fazer PCA
+aux_pca_executado = execute_pca(aux_pca'); %Executa PCA em cima dos dados de treino e teste
+
+X = aux_pca_executado(:, 1:N_x(1))'; %Separa os dados de treino de novo
+D = aux_pca_executado(:, N_x(1) + 1:end)'; %Separa os dados de teste
+
+size_X_pca = size(X);
+size_D_pca = size(D);
+
+X = [ones(1, size_X_pca(2)); X];
+D = [ones(1, size_D_pca(2)); D];
 
 %X=[ones(N_x(2)*N_x(3), 1); X]; %Adiciona um 1 a ao primeiro elemento para servir de bias
 %D=[ones(N_d(2)*N_d(3), 1) D]; %Adiciona um 1 a ao primeiro elemento para servir de bias
@@ -72,9 +82,9 @@ Xtr=X;  Dtr=X_labels;
 Xts=D;  Dts=D_labels;
 
 
-%Aplica PCA nos dados de teste e treino
-pca_Xtr=execute_pca(Xtr'); pca_Xts=execute_pca(Xts');
-Xtr = pca_Xtr'; Xts = pca_Xts';
+% %Aplica PCA nos dados de teste e treino
+% pca_Xtr=execute_pca(Xtr'); pca_Xts=execute_pca(Xts');
+% Xtr = pca_Xtr'; Xts = pca_Xts';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 3: Estimar os parametros do classificador (pesos e limiares) %%
@@ -120,6 +130,7 @@ figure; plot(erro_medio_epoca);
 title('Curva de Aprendizagem');
 xlabel('Epoca de treinamento');
 ylabel('Erro quadratico medio por epoca');
+print("ps_com_pca_aprendizado.png");
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 4: Determinar predicoes da classe dos vetores de teste %%%%%%%%
@@ -153,7 +164,7 @@ Pacertos=100*Nacertos/Nts
 
 
 
-save -text ps_com_pca.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
+save -text ps_com_pca_20_08.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
 
 
 

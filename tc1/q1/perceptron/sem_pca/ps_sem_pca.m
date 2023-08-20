@@ -114,7 +114,7 @@ figure; plot(erro_medio_epoca);
 title('Curva de Aprendizagem');
 xlabel('Epoca de treinamento');
 ylabel('Erro quadratico medio por epoca');
-
+print("ps_sem_pca_aprendizado.png");
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 4: Determinar predicoes da classe dos vetores de teste %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -147,7 +147,7 @@ Pacertos=100*Nacertos/Nts
 
 
 
-save -text ps_sem_pca.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
+save -text ps_sem_pca_20_08.txt numero_de_epocas Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
 
 
 

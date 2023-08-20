@@ -1,36 +1,41 @@
-# Created by Octave 6.4.0, Sun Aug 20 01:42:41 2023 -03 <otto@SOUSAOTT2>
+# Created by Octave 6.4.0, Sun Aug 20 02:06:25 2023 -03 <otto@SOUSAOTT2>
+# name: numero_de_epocas
+# type: scalar
+100
+
+
 # name: Nerros_pos
 # type: scalar
-1119
+1246
 
 
 # name: Nerros_neg
 # type: scalar
-617
+891
 
 
 # name: Nacertos
 # type: scalar
-8264
+7864
 
 
 # name: Perros_pos
 # type: scalar
-11.19
+12.458754124587541
 
 
 # name: Perros_neg
 # type: scalar
-6.1699999999999999
+8.9091090890910909
 
 
 # name: Pacertos
 # type: scalar
-82.640000000000001
+78.632136786321368
 
 
 # name: elapsed_time
 # type: scalar
-5.6818039417266846
+398.07246589660645
 
 
