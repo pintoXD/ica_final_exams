@@ -146,3 +146,8 @@ warning: called from
     mlp_sem_pca at line 17 column 1
 
 Repeticao = 1
+elapsed_time = 8604.0
+STATS =
+
+   97.370      NaN   97.370   97.370   97.370
+
