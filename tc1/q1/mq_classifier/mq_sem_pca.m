@@ -43,13 +43,13 @@ N = size(X); %N(1) = Numero de pixels
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 2: Separar dados de treino/teste %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%N=N(2);   % Numero de exemplos = No. de colunas da matriz X
-%Ntr=floor(0.8*N);  % Numero de casos para treinamento
 Nts=size(D)(2);  % Numero de casos de teste
 
 %I=randperm(N);
 
-%X=[-ones(1,N);X];  % Adiciona uma linha de -1's
+X=[-ones(1,N(2));X];  % Adiciona uma linha de -1's
+D=[-ones(1,size(D)(2));D];  % Adiciona uma linha de -1's
+
 %X=X(:,I);  % Embaralha as colunas da matriz X
 
 %D=D(I);    % Embaralha as colunas da matriz D para manter correspondencia
@@ -59,7 +59,6 @@ Xtr=X;  Dtr=X_labels;
 % Dtr = sigmoid(Dtr);
 labels_size = size(Dtr);
 aux_dtr = zeros(10, labels_size(2));
-
 for i=1:labels_size(2),
     aux_dtr(Dtr(1, i) + 1, i) = 1;
 end
@@ -70,7 +69,7 @@ Xts=D;  Dts=D_labels;
 labels_size = size(Dts);
 aux_dts = zeros(10, labels_size(2));
 for i=1:labels_size(2),
-    aux_dts(Dtr(1, i) + 1, i) = 1;
+    aux_dts(Dts(1, i) + 1, i) = 1;
 end
 Dts=aux_dts;
 % Dts = sigmoid(Dts);
@@ -80,9 +79,6 @@ Dts=aux_dts;
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%W=Dtr*Xtr'*inv(Xtr*Xtr');    % Equacao de livro-texto (teorica)
-%W=D*X'*inv(X*X');             % Equacao de livro-texto (teorica)
-% W=Dtr/Xtr;                  % Solucao que usa decomposicao QR
 W=Dtr*pinv(Xtr);              % Solucao que usa decomposicao SVD
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -94,8 +90,6 @@ for j=1:Nts,
    [valor posicao] = max(Ypred(:, j));
    Ypred_q(j) = posicao - 1;
 end
-
-% Ypred_q=round(Ypred);  % Saida quantizada para +1 ou -1.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 5: Determinar as taxas de acerto/erro %%%%%%%%
@@ -113,7 +107,7 @@ Pacertos=100*Nacertos/Nts
 
 
 elapsed_time = toc()
-save -text mq_sem_pca_out.txt Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos;
+save -text mq_sem_pca_out.txt Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
 
 
 

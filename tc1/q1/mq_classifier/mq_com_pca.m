@@ -16,8 +16,8 @@ X_labels=train_labels;
 D=test_data;
 D_labels=test_labels;
 
-tic();
 %X=X'; D=D';
+tic();
 
 N_x=size(X);  % N(1)=Numero de imagens, N(2)=dimensão X da i-esima imagem,
             % N(3)=dimensão Y da i-esima imagem
@@ -29,27 +29,33 @@ D = reshape(D, N_d(1),N_d(2)*N_d(3)); %Transformando de uma matriz 3D para uma 2
 
 X=X'; D=D'; X_labels=X_labels'; D_labels=D_labels';
 
+num_classes = 10;
 X=double(X);
 D=double(D);
 X_labels=double(X_labels);
 D_labels=double(D_labels);
-num_classes = 10;
 
-X=double(X/255.00); %Normaliza os valores dos pixels entre 0 e 1
-D=double(D/255.00); %Normaliza os valores dos pixels entre 0 e 1
+aux_pca = [X D]; %Une dados de treino e teste para fazer PCA
+aux_pca_executado = execute_pca(aux_pca); %Executa PCA em cima dos dados de treino e teste
+
+X = aux_pca_executado(:, 1:N_x(1)); %Separa os dados de treino de novo
+D = aux_pca_executado(:, N_x(1) + 1:end); %Separa os dados de teste
+
+% X_pca=execute_pca(X); %Executa PCA em cima das variáveis de entrada de treinamento
+% D_pca=execute_pca(D); %Executa PCA em cima das variáveis de entrada de teste
 
 N = size(X); %N(1) = Numero de pixels
              %N(2) = Numero de imagens
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 2: Separar dados de treino/teste %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%N=N(2);   % Numero de exemplos = No. de colunas da matriz X
-%Ntr=floor(0.8*N);  % Numero de casos para treinamento
 Nts=size(D)(2);  % Numero de casos de teste
 
 %I=randperm(N);
 
-%X=[-ones(1,N);X];  % Adiciona uma linha de -1's
+X=[-ones(1,N(2));X];  % Adiciona uma linha de -1's
+D=[-ones(1,size(D)(2));D];  % Adiciona uma linha de -1's
+
 %X=X(:,I);  % Embaralha as colunas da matriz X
 
 %D=D(I);    % Embaralha as colunas da matriz D para manter correspondencia
@@ -59,7 +65,6 @@ Xtr=X;  Dtr=X_labels;
 % Dtr = sigmoid(Dtr);
 labels_size = size(Dtr);
 aux_dtr = zeros(10, labels_size(2));
-
 for i=1:labels_size(2),
     aux_dtr(Dtr(1, i) + 1, i) = 1;
 end
@@ -70,22 +75,18 @@ Xts=D;  Dts=D_labels;
 labels_size = size(Dts);
 aux_dts = zeros(10, labels_size(2));
 for i=1:labels_size(2),
-    aux_dts(Dtr(1, i) + 1, i) = 1;
+    aux_dts(Dts(1, i) + 1, i) = 1;
 end
 Dts=aux_dts;
-% Dts = sigmoid(Dts);
 
-% Aplica PCA aos dados de teste e de treino
-Xtr=execute_pca(Xtr); Xts=execute_pca(Xts);
+% Xtr=execute_pca(Xtr); %Executa PCA em cima das variáveis de entrada de treinamento
+% Xts=execute_pca(Xts); %Execetura PCA em cima das variáveis de entrada de teste
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 3: Estimar os parametros do classificador (pesos e limiares) %%
 %%% pelo metodo dos minimos quadrados (classificador sem camada oculta)%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%W=Dtr*Xtr'*inv(Xtr*Xtr');    % Equacao de livro-texto (teorica)
-%W=D*X'*inv(X*X');             % Equacao de livro-texto (teorica)
-% W=Dtr/Xtr;                  % Solucao que usa decomposicao QR
 W=Dtr*pinv(Xtr);              % Solucao que usa decomposicao SVD
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -98,13 +99,11 @@ for j=1:Nts,
    Ypred_q(j) = posicao - 1;
 end
 
-% Ypred_q=round(Ypred);  % Saida quantizada para +1 ou -1.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Passo 5: Determinar as taxas de acerto/erro %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Resultados=[D_labels' Ypred_q'];          % Saida desejada e predita lado-a-lado
-Erros=Resultados(:,1)-Resultados(:,2);  % Coluna 1 - Coluna 2
+Erros=Resultados(:,1)-Resultados(:,2);    % Coluna 1 - Coluna 2
 
 Nerros_pos=length(find(Erros>0))
 Nerros_neg=length(find(Erros<0))
@@ -116,8 +115,4 @@ Pacertos=100*Nacertos/Nts
 
 
 elapsed_time = toc()
-save -text mq_sem_pca_out.txt Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
-
-
-
-
+save -text mq_com_pca_out.txt Nerros_pos Nerros_neg Nacertos Perros_pos Perros_neg Pacertos elapsed_time;
