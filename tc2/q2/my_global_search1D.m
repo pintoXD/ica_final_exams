@@ -82,3 +82,23 @@ set(gca, "fontsize", 14);
 
 figure;
 plot(v,polyval(x_best, v),'ro');  %%% Plota solucao final
+
+
+ypred = polyval(x_best, v);
+
+erro=y-ypred;
+SEQ = sum(erro.^2);
+
+ymed=mean(y);
+Syy=sum((y-ymed).^2);
+
+R2 = 1 - (SEQ/Syy);
+disp("R2 is: "); disp(R2);
+
+SEQdiv = SEQ/(length(v) - (k+1));
+Syydiv = Syy/(length(v) - 1);
+R2adj = 1 - (SEQdiv/Syydiv);
+disp("R2adj is: "); disp(R2adj);
+
+AIC = (length(v)*log(SEQ))+2*k;
+disp("AIC is: "); disp(AIC);
