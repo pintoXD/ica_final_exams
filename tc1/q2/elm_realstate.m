@@ -65,7 +65,8 @@ Dts=D(:,Ntr+1:end);
 %%% Passo 3: Escolha aleatoria dos pesos e %%
 %%% limiares dos neuronios intermediarios %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Q=200;  % Numero de neuronios intermediarios
+% Q=200;  % Numero de neuronios intermediarios
+Q = 2*p + 1;
 
 W=0.5*rand(Q,p+1);   % Determinacao da matriz da projecao aleatoria
 
