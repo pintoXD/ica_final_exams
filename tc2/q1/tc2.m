@@ -2,7 +2,7 @@ load aerogerador.dat
 v=aerogerador(:,1);
 P=aerogerador(:,2);
 
-k=1;
+k=5;
 
 figure; plot(v, P, 'bo');
 title(sprintf("K=%d", k));

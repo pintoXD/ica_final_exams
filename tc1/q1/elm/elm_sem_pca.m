@@ -88,7 +88,7 @@ Dts=aux_dts;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sigmoid = @(valor)1./(1 + exp(-valor));
        %De acordo com as heurísticas, esse é o mínimo de neurônios a se ter.
-num_neuronios=1569;  % Numero de neuronios intermediarios de acordo com Kolmogorov
+num_neuronios=1569;  % Numero de neuronios intermediarios de acordo com a regra da média
 % num_neuronios=88;  % Numero de neuronios intermediarios de acordo com Kolmogorov
 
 
