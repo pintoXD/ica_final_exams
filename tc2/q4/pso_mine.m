@@ -15,7 +15,7 @@ P=aerogerador(:,2);
 %%% Gráfico da função de Ackley
 limites=[-6 10];   % Limites do intervalo de busca para funcao de Ackely
 %x_ackley=limites(1):0.1:limites(2);  % Dominio de x discretizado em incrementos de 0.1
-k = 5;
+k = 4;
 
 
 %f_ackley=ackley1D(x_ackley);
@@ -36,7 +36,7 @@ v=zeros(Np,1);   % Velocidades iniciais das particulas
 %ao valor independente do polinômio. Por exemplo, se P = ax + b. o +1 representa
 %os valores que b pode assumir.
 b_aerogerador=unifrnd(limites(1), limites(2), Np, k+1);
-SEQ  = pso_seq(b_aerogerador, v_aero, P);
+SEQ  = pso_sea(b_aerogerador, v_aero, P);
 
 Fcand = SEQ;
 
@@ -75,7 +75,7 @@ for t=1:Ng,
     I=find(b_aerogerador > limites(2)); b_aerogerador(I)=limites(2);   % fora do limite superior
 
     %Fcand=ackley1D(x);  % Avalia solucoes candidatas
-    SEQ = pso_seq(b_aerogerador, v_aero, P);
+    SEQ = pso_sea(b_aerogerador, v_aero, P);
     Fcand = SEQ;
     %% Avalia solucoes candidatas (problema minimizacao)
     DF=Fcand-Fbest;
@@ -83,11 +83,15 @@ for t=1:Ng,
     I_worse =find(DF>0);  % Particluas que pioraram posicoes
 
     % Atualiza posicoes das particulas que melhoraram performance
-    b_best(I_better)=b_aerogerador(I_better);
+    % b_best(I_better)=b_aerogerador(I_better);
+    % Fbest(I_better)=Fcand(I_better);
+    b_best(I_better,:)=b_aerogerador(I_better,:);
     Fbest(I_better)=Fcand(I_better);
 
     % Mantem posicoes das particulas que pioraram performance
-    b_best(I_worse)=b_best(I_worse);
+    % b_best(I_worse)=b_best(I_worse);
+    % Fbest(I_worse)=Fbest(I_worse);
+    b_best(I_worse,:)=b_best(I_worse,:);
     Fbest(I_worse)=Fbest(I_worse);
 
     % Encontra melhor solucao corrente no enxame
@@ -113,3 +117,30 @@ hold off
 figure; plot(aptidao,'linewidth',3);
 xlabel('Iteration');
 ylabel('Fitness');
+
+
+% plot(v,polyval(g_best, v),'ro');  %%% Plota solucao final
+
+
+ypred = polyval(g_best, v_aero);
+norma_vetor = norm(ypred)
+y = P;
+
+erro=y-ypred;
+SEQ = sum(erro.^2);
+
+ymed=mean(y);
+Syy=sum((y-ymed).^2);
+
+R2 = 1 - (SEQ/Syy);
+disp("R2 is: "); disp(R2);
+
+SEQdiv = SEQ/(length(v_aero) - (k+1));
+Syydiv = Syy/(length(v_aero) - 1);
+R2adj = 1 - (SEQdiv/Syydiv);
+disp("R2adj is: "); disp(R2adj);
+
+AIC = (length(v_aero)*log(SEQ))+2*k;
+disp("AIC is: "); disp(AIC);
+
+

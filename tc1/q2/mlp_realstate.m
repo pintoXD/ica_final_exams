@@ -45,14 +45,14 @@ Ntest=length(Xtest);    % No. dados de teste
 
 % DEFINE ARQUITETURA DA REDE
 %===========================
-Ne = 500;        % No. de epocas de treinamento
-Nr = 4;          % No. de rodadas de treinamento/teste
+Ne = 200;        % No. de epocas de treinamento
+Nr = 1;          % No. de rodadas de treinamento/teste
 Ni = 6;          % No. de unidades de entrada
-Nh = (2*Ni + 1) + 10;   % No. de neuronios na camada oculta
+Nh = (2*Ni + 1);   % No. de neuronios na camada oculta
 No = 1;          % No. de neuronios na camada de saida
 
-eta=0.01;   % Passo de aprendizagem
-mom=0.75;  % Fator de momento
+eta=0.05;   % Passo de aprendizagem
+mom=0.50;  % Fator de momento
 
 % Inicia matrizes de pesos
 % WW=0.01*rand(Ni+1, Nh);   % Pesos entrada -> camada oculta

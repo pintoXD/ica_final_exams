@@ -12,7 +12,7 @@ function x_with_pca = execute_pca(Xc)
     for i=1:size(EXPLAINED)(1),
         variance_sum = variance_sum + EXPLAINED(i,:);
         index_max_variance_sum = i;
-        if (variance_sum >= 70.0)
+        if (variance_sum >= 90.0)
             break;
         endif
     end
